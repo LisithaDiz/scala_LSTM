@@ -22,7 +22,7 @@ object check {
 
 
   def main(args: Array[String]): Unit = {
-    val result = multiply(B, B)
+    val result = add(B, B)
     println("Result of multiplication:")
     result.foreach(row => println(row.mkString(" ")))
   }

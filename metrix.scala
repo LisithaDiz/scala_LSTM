@@ -48,4 +48,18 @@ package object matrixOp {
     }
     new_Matrix
   }
+
+  def add(matrixA: Array[Array[Double]], matrixB: Array[Array[Double]]): Array[Array[Double]] = {
+
+        val new_Matrix: Array[Array[Double]] = Array.ofDim[Double](matrixA.length, matrixA(0).length)
+
+        for (i <- 0 until matrixA.length) {
+          for (j <- 0 until matrixA(0).length) {
+            new_Matrix(i)(j) = matrixA(i)(j) + matrixA(i)(j)
+          }
+        }
+        new_Matrix
+      }
+
+
 }
