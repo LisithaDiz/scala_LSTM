@@ -2,11 +2,15 @@ package com.matrix
 
 package object DotOp {
 
-  def dot(matrixA: Array[Double], matrixB: Array[Double]): Array[Double] = {
-    if (matrixA.length == matrixB.length) {
-      val dot_Matrix: Array[Double] = new Array[Double](matrixA.length)
-      for (i <- 0 until matrixA.length) {
-        dot_Matrix(i) = matrixA(i) * matrixB(i)
+  def dot(matrixA: Array[Array[Double]], matrixB: Array[Array[Double]]): Array[Array[Double]] = {
+    if (matrixA(0).length == matrixB.length) {
+      val dot_Matrix: Array[Array[Double]] = Array.ofDim[Double](matrixA.length, matrixB(0).length)
+      for (i <- matrixA.indices) {
+        for (j <- matrixB(0).indices) {
+          for (k <- matrixB.indices) {
+            dot_Matrix(i)(j) += matrixA(i)(k) * matrixB(k)(j)
+          }
+        }
       }
       dot_Matrix
     } else {
@@ -14,52 +18,69 @@ package object DotOp {
     }
   }
 
-  def dotNadd(matrix: Array[Double]): Double = {
-    var sum = 0.0
-    for (i <- 0 until matrix.length) {
-      sum += matrix(i)
-    }
-    sum
-  }
 }
 
-package object matrixOp {
+package object MatrixOp {
   import com.matrix.DotOp._
 
   def reshape(matrix: Array[Array[Double]]): Array[Array[Double]] = {
     val reshape_Matrix: Array[Array[Double]] = Array.ofDim[Double](matrix(0).length, matrix.length)
 
-    for (j <- 0 until matrix.length) {
-      for (i <- 0 until matrix(0).length) {
+    for (j <- matrix.indices) {
+      for (i <- matrix(0).indices) {
         reshape_Matrix(i)(j) = matrix(j)(i)
       }
     }
     reshape_Matrix
   }
 
-  def multiply(matrixA: Array[Array[Double]], matrixB: Array[Array[Double]]): Array[Array[Double]] = {
-    val reshape_matrixB = reshape(matrixB)
-    val new_Matrix: Array[Array[Double]] = Array.ofDim[Double](matrixA.length, reshape_matrixB.length)
+  def transpose(matrix: Array[Array[Double]]): Array[Array[Double]] = reshape(matrix)
 
-    for (i <- 0 until matrixA.length) {
-      for (j <- 0 until reshape_matrixB.length) {
-        new_Matrix(i)(j) = dotNadd(dot(matrixA(i), reshape_matrixB(j)))
+  def multiply(matrixA: Array[Array[Double]], matrixB: Array[Array[Double]]): Array[Array[Double]] = {
+    dot(matrixA, matrixB)
+  }
+
+  def add(matrixA: Array[Array[Double]], matrixB: Array[Array[Double]]): Array[Array[Double]] = {
+    val new_Matrix: Array[Array[Double]] = Array.ofDim[Double](matrixA.length, matrixA(0).length)
+
+    for (i <- matrixA.indices) {
+      for (j <- matrixA(0).indices) {
+        new_Matrix(i)(j) = matrixA(i)(j) + matrixB(i)(j)
       }
     }
     new_Matrix
   }
 
-  def add(matrixA: Array[Array[Double]], matrixB: Array[Array[Double]]): Array[Array[Double]] = {
+  def sub(matrixA: Array[Array[Double]], matrixB: Array[Array[Double]]): Array[Array[Double]] = {
+    val new_Matrix: Array[Array[Double]] = Array.ofDim[Double](matrixA.length, matrixA(0).length)
 
-        val new_Matrix: Array[Array[Double]] = Array.ofDim[Double](matrixA.length, matrixA(0).length)
-
-        for (i <- 0 until matrixA.length) {
-          for (j <- 0 until matrixA(0).length) {
-            new_Matrix(i)(j) = matrixA(i)(j) + matrixA(i)(j)
-          }
-        }
-        new_Matrix
+    for (i <- matrixA.indices) {
+      for (j <- matrixA(0).indices) {
+        new_Matrix(i)(j) = matrixA(i)(j) - matrixB(i)(j)
       }
+    }
+    new_Matrix
+  }
 
+  def scaleMul(k: Double, matrixA: Array[Array[Double]]): Array[Array[Double]] = {
+    for (i <- matrixA.indices) {
+      for (j <- matrixA(0).indices) {
+        matrixA(i)(j) = k * matrixA(i)(j)
+      }
+    }
+    matrixA
+  }
+
+  def addRowByRow(matrixA: Array[Array[Double]], matrixB: Array[Double]): Array[Array[Double]] = {
+    val new_Matrix: Array[Array[Double]] = Array.ofDim[Double](matrixA.length, matrixA(0).length)
+
+    for (i <- matrixA.indices) {
+      for (j <- matrixA(0).indices) {
+        new_Matrix(i)(j) = matrixA(i)(j) + matrixB(j)
+      }
+    }
+    new_Matrix
+  }
 
 }
+
