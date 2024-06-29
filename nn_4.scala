@@ -31,3 +31,13 @@ object NN4 {
     layer2_output.foreach(row => println(s"[${row.mkString(", ")}]"))
   }
 }
+
+// --- Fully connceted NN ----
+
+// Input1    
+//             Hidden1   Hidden1
+// Input2   
+//             Hidden2   Hidden2
+// Input3   
+//             Hidden3   Hidden3
+// Input4   
