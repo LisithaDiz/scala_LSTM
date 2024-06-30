@@ -1,5 +1,5 @@
-import com.matrix.DotOp._
-import com.matrix.MatrixOp._
+import mylib.matrix.DotOp._
+import mylib.matrix.MatrixOp._
 
 object check {
   val A = Array(

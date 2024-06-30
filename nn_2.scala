@@ -1,4 +1,4 @@
-import com.matrix.DotOp._
+import mylib.matrix.DotOp._
 
 object NN2 {
   var input = Array(1.0, 2.0, 3.0, 2.5)

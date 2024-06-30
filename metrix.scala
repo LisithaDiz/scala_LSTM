@@ -1,4 +1,4 @@
-package com.matrix
+package mylib.matrix
 
 package object DotOp {
 
@@ -21,7 +21,7 @@ package object DotOp {
 }
 
 package object MatrixOp {
-  import com.matrix.DotOp._
+  import mylib.matrix.DotOp._
 
   def reshape(matrix: Array[Array[Double]]): Array[Array[Double]] = {
     val reshape_Matrix: Array[Array[Double]] = Array.ofDim[Double](matrix(0).length, matrix.length)

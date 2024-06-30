@@ -1,5 +1,6 @@
-import com.matrix.DotOp._
-import com.matrix.MatrixOp._
+import mylib.matrix.DotOp._
+import mylib.matrix.MatrixOp._
+import com.github.tototoshi.csv._
 
 object NN4 {
   var input = Array(
