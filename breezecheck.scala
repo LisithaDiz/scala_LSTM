@@ -1,7 +1,7 @@
-import com.github.breeze.linalg._
-import com.github.breeze.plot._
+import breeze.linalg._
+import breeze.plot._
 
-object BreezeVizExample {
+object BreezeCheck {
   def main(args: Array[String]): Unit = {
     // Generate some data points
     val x = linspace(0.0, 1.0, 100)
