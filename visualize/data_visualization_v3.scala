@@ -2,15 +2,13 @@ import scala.io.Source
 import scala.collection.mutable.ArrayBuffer
 import breeze.linalg._
 import breeze.plot._
-import java.text.SimpleDateFormat
-import java.util.Date
 
 object CSVColumnExtractor {
   def main(args: Array[String]): Unit = {
     val filePath = "seattle-weather.csv"
-    
+
     val bufferedSource = Source.fromFile(filePath)
-    
+
     val columnValues_date = ArrayBuffer[String]()
     val columnValues_temp_max = ArrayBuffer[Double]()
 
@@ -30,20 +28,15 @@ object CSVColumnExtractor {
 
     bufferedSource.close()
 
-    // Convert date strings to a numerical format
-    val dateFormat = new SimpleDateFormat("M/d/yyyy")
-    val dates = columnValues_date.map(dateFormat.parse(_).getTime.toDouble / (1000 * 60 * 60 * 24)).toArray
-    val tempMax = columnValues_temp_max.toArray
-
     // Create the plot
-    val fig = Figure()
-    val plt = fig.subplot(0)
+    val f = Figure()
+    val p = f.subplot(0)
 
-    plt += plot(DenseVector(dates), DenseVector(tempMax), '.')
-    plt.xlabel = "Date (days since epoch)"
-    plt.ylabel = "Max Temperature (°C)"
-    plt.title = "Date vs Max Temperature"
+    p += plot(columnValues_temp_max.indices.map(_.toDouble).toArray, columnValues_temp_max.toArray, '.')
+    p.title = "Date vs Max Temperature"
+    p.xlabel = "Date (days since epoch)"
+    p.ylabel = "Max Temperature (°C)"
 
-    fig.refresh()
+    f.saveas("temperature_plot.png")
   }
 }

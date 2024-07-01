@@ -1,13 +1,9 @@
 import scala.io.Source
 import scala.collection.mutable.ArrayBuffer
-// import com.github.tototoshi.csv._
 
 object CSVColumnExtractor {
   def main(args: Array[String]): Unit = {
     val filePath = "seattle-weather.csv"
-    
-    // val columnIndex_date = 0
-    // val columnIndex_temp_max = 2
     
     val bufferedSource = Source.fromFile(filePath)
     
@@ -17,8 +13,8 @@ object CSVColumnExtractor {
     for (line <- bufferedSource.getLines) {
       val cols = line.split(",").map(_.trim)
       if (cols.length > 0 && cols.length > 2) {
-        columnValues_date += cols(0)
-        columnValues_temp_max += cols(2)
+        columnValues_date += cols(0)      // val columnIndex_date = 0
+        columnValues_temp_max += cols(2)    // val columnIndex_temp_max = 2
       }
     }
 
